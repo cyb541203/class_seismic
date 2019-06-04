@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    .zdog-canvas {
+       background: #FDB;
+       cursor: move;
+     }
+  </style>
+  <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+  <title>Simple Beam</title>
+</head>
+<body>
+    <canvas class="zdog-canvas" width="240" height="240">
+    <script>
+        /*const illo = new Zdog.Illustration({
+            element: '.zdog-canvas',
+        });*/
+        
+        // tilt the canvas
+        const TAU = Zdog.TAU;
+        let isSpinning = true;
+        let illo = new Zdog.Illustration({
+            element: '.zdog-canvas',
+            dragRotate: true,
+        // tilt the canvas
+            rotate: { x: -TAU/14 },
+            onDragStart: function() {
+                isSpinning = false;
+            },
+        });
+        
+        new Zdog.Box({
+            addTo: illo,
+            width: 100,
+            height: 120,
+            depth: 200,
+            stroke: false,
+            color: '#C25',
+            // remove left & right faces
+            leftFace: false,
+            rightFace: false,
+            rearFace: '#EA0',
+            topFace: '#ED0',
+            bottomFace: '#636',
+        });
+
+        let rebar = new Zdog.Cylinder({
+            addTo: illo,
+            diameter: 10,
+            length: 200,
+            stroke: false,
+        // position closer
+            translate: { y: 30 },
+            //color: '#C25',
+            //frontFace: '#EA0',
+            //backface: '#636',
+        });
+        rebar.copy({
+         translate: { x: 20, y: 30},
+        });
+        rebar.copy({
+         translate: { x: -20, y: 30},
+        });
+        rebar.copy({
+         translate: { x: 40, y: 30},
+        });
+        rebar.copy({
+         translate: { x: -40, y: 30},
+        });
+        
+        //illo.updateRenderGraph();
+        
+        function animate() {
+            illo.rotate.y 
+                += isSpinning ? 0.01 : 0;
+            illo.updateRenderGraph();
+            requestAnimationFrame( animate );
+        }
+        
+        animate();
+        </script>
+    </canvas>
+</body>
+</html>
